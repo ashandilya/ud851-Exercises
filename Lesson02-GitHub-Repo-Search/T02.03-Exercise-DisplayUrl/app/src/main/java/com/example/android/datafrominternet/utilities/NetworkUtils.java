@@ -20,6 +20,7 @@ import android.net.Uri;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.Scanner;
@@ -48,12 +49,19 @@ public class NetworkUtils {
      * @return The URL to use to query the GitHub server.
      */
     public static URL buildUrl(String githubSearchQuery) {
-        // TODO (1) Fill in this method to build the proper GitHub query URL
+        // COMPLETED (1) Fill in this method to build the proper GitHub query URL
         Uri builtUri = Uri.parse(GITHUB_BASE_URL).buildUpon()
                 .appendQueryParameter(PARAM_QUERY,githubSearchQuery)
                 .appendQueryParameter(PARAM_SORT,sortBy)
                 .build();
-        return null;
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return url;
     }
 
     /**
